@@ -1,0 +1,62 @@
+{% load static %}
+<html>
+    <head>
+        <title>RABIT - Book Directory</title>
+        <link rel="stylesheet" href="{% static 'books/css/base.css' %}">
+    </head>
+    <body>
+        <h1>R.A.B.I.T.</h1>
+        <h4>Reading And Book Information Tracker</h4>
+        <hr>
+
+        <div class = "layout-container">
+            <aside>
+                <ul>
+                    <a href="{% url 'books:index'%}">Home</a>
+
+                </ul>
+                <ul>
+                    <a href="{% url 'books:add_book' %}">Add Book</a>
+
+                </ul>
+                <ul>
+                    <a href="{% url 'books:add_reading' %}">Add Reading</a>
+
+                </ul>
+                <ul>
+                    <a href="{% url 'books:add_tag' %}">Add Tag</a>
+                </ul>
+                <ul>
+                    <a href="{% url 'books:summary' %}">Reading Summary</a>
+                </ul>
+            </aside>
+            <main>
+
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Year</th>
+                    </tr>
+                    {% for book in booklist %}
+                        <tr>
+                            <td><a href="{% url 'books:detail' book.id%}">{{book.title}}</a></td>
+                            <td>{{book.author}}</td>
+                            <td>{{book.year}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </main>
+            <aside>
+                <form action = "/books" method = "get">
+                    {% for tag in tags %}
+                        <div>
+                            <label><input type = "checkbox" name = "tag" value = {{tag.name}}>{{tag.name}}</label>
+                        </div>
+                    {% endfor %}
+                    <button type = "submit">Search</button>
+                </form>
+            </aside>
+        </div>
+    </body>
+</html>

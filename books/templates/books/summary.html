@@ -1,0 +1,77 @@
+{% load static %}
+<html>
+    <head>
+        <title>RABIT - Reading Summary</title>
+        <link rel="stylesheet" href="{% static 'books/css/base.css' %}">
+    </head>
+    <body>
+        <h1>R.A.B.I.T.</h1>
+        <h4>Reading And Book Information Tracker</h4>
+        <hr>
+
+        <div class = "layout-container">
+            <aside>
+                <ul>
+                    <a href="{% url 'books:index'%}">Home</a>
+
+                </ul>
+                <ul>
+                    <a href="{% url 'books:add_book' %}">Add Book</a>
+
+                </ul>
+                <ul>
+                    <a href="{% url 'books:add_reading' %}">Add Reading</a>
+
+                </ul>
+                <ul>
+                    <a href="{% url 'books:add_tag' %}">Add Tag</a>
+                </ul>
+                <ul>
+                    <a href="{% url 'books:summary' %}">Reading Summary</a>
+                </ul>
+            </aside>
+            <main>
+
+                <table>
+                    <tr>
+                        <th>Book</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Asynchronous</th>
+                        <th>Length (days)</th>
+                    </tr>
+                    {% for reading in readinglist %}
+                        <tr>
+                            <td><a href="{% url 'books:detail' reading.book.id%}">{{reading.book.title}}</a></td>
+                            <td>{{reading.start_date}}</td>
+                            <td>{{reading.end_date}}</td>
+                            <td>{{reading.get_status_display}}</td>
+                            <td>{{reading.asynchronous}}</td>
+                            <td>{{reading.length}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </main>
+            <aside>
+                <form action = "{% url 'books:summary'%}" method = "get">
+                    <div>
+                        <label><input type = "checkbox" name = "async">Asynchronous</label>
+                    </div>
+                    {% for status in statuses %}
+                        <div>
+                            <label><input type = "checkbox" name = "status" value = {{status}}>{{status}}</label>
+                        </div>
+                    {% endfor %}
+                    <div>
+                        <label>Start Date<input type = "date" name="start_date" value={{year_start}} min = {{min_date}} max = {{today}} required></label>
+                        <label>End Date<input type = "date" name="end_date" value={{today}} min = {{min_date}} max = {{today}} required></label>
+                    </div>
+                    <button type = "submit">Search</button>
+                </form>
+                <p><strong>Count:</strong> {{count}}</p>
+                <p><strong>Average:</strong> {{average}}</p>
+            </aside>
+        </div>
+    </body>
+</html>

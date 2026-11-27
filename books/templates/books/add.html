@@ -1,0 +1,47 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>RABIT - Add</title>
+        <link rel="stylesheet" href="{% static 'books/css/base.css' %}">
+    </head>
+    <body>
+        <h1>R.A.B.I.T.</h1>
+        <h4>Reading And Book Information Tracker</h4>
+        <hr>
+        <div class = "layout-container">
+            <aside>
+                <ul>
+                    <a href="/books">Home</a>
+
+                </ul>
+                <ul>
+                    <a href="{% url 'books:add_book' %}">Add Book</a>
+
+                </ul>
+                <ul>
+                    <a href="{% url 'books:add_reading' %}">Add Reading</a>
+
+                </ul>
+                <ul>
+                    <a href="{% url 'books:add_tag' %}">Add Tag</a>
+                </ul>
+                <ul>
+                    <a href="{% url 'books:summary' %}">Reading Summary</a>
+                </ul>
+            </aside>
+            <main>
+                {% if error %}
+                {{ error }}
+                {% endif %}
+                <form action = "{% url form_dest%}" method = "post">
+                    {% csrf_token %}
+                    {{ form }}
+
+                    <button type = "submit">Add Book</button>
+                </form>
+            </main>
+
+        </div>
+    </body>
+</html>

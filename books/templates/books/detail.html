@@ -1,0 +1,60 @@
+{% load static %}
+<html>
+    <head>
+        <title>RABIT - {{book.title}}</title>
+        <link rel="stylesheet" href="{% static 'books/css/base.css' %}">
+    </head>
+    <body>
+        <h1>R.A.B.I.T.</h1>
+        <h4>Reading And Book Information Tracker</h4>
+        <hr>
+        <div class = "layout-container">
+
+            <aside>
+                <ul>
+                    <a href="{% url 'books:index'%}">Home</a>
+
+                </ul>
+                <ul>
+                    <a href="{% url 'books:add_book' %}">Add Book</a>
+
+                </ul>
+                <ul>
+                    <a href="{% url 'books:add_reading' %}">Add Reading</a>
+
+                </ul>
+                <ul>
+                    <a href="{% url 'books:add_tag' %}">Add Tag</a>
+                </ul>
+                <ul>
+                    <a href="{% url 'books:summary' %}">Reading Summary</a>
+                </ul>
+            </aside>
+            <main>
+                <h2>{{book.title}}</h2>
+                <p>Author: {{book.author}}</p>
+                <p>Year: {{book.year}}</p>
+                <p>Tags: {% for tag in book.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                <h3>Readings</h3>
+                <table>
+                    <tr>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Asynchronous</th>
+                        <th>Length (days)</th>
+                    </tr>
+                    {% for reading in book.readings.all %}
+                        <tr>
+                            <td>{{reading.start_date}}</a></td>
+                            <td>{{reading.end_date}}</td>
+                            <td>{{reading.get_status_display}}</td>
+                            <td>{{reading.asynchronous}}</td>
+                            <td>{{reading.length}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </main>
+
+    </body>
+</html>
