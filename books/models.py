@@ -16,7 +16,7 @@ class Book(models.Model):
     title = models.CharField()
     author = models.CharField()
     year = models.IntegerField()
-    tags = models.ManyToManyField(Tag, related_name="books")
+    tags = models.ManyToManyField(Tag, related_name="books", blank=True)
     def __str__(self):
         return str(self.title)
     class Meta:

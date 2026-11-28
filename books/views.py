@@ -67,7 +67,7 @@ def add_book(request):
             form.save()
             return new_render
         else:
-            return new_render
+            return render(request, "books/add.html", {"form": newform, "form_dest": "books:add_reading", "error": form.errors})
     else:
         return new_render
 
@@ -80,7 +80,7 @@ def add_tag(request):
             form.save()
             return new_render
         else:
-            return new_render
+            return render(request, "books/add.html", {"form": newform, "form_dest": "books:add_reading", "error": form.non_field_errors})
     else:
         return new_render
 
